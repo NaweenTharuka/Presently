@@ -1,0 +1,156 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <nav aria-label="breadcrumb mt-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'feedback' %}">Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'emotionaudio' %}">Emotion-predictions(Audio)</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Prosody Deatil View</li>
+        </ol>
+    </nav>
+    <div class="heading-text heading-section text-center pt-3">
+        <h4>Prosody Detail View - Audio</h4>
+    </div>
+    <div class="line"></div>
+    <div class="d-flex">
+        <div class="col-6">
+            <div class="text-center mb-5">
+                <h3 class="font-weight-light">Compared to native speech, here are the prosodic features of your speech:<br /><b>
+                <span class="text-rotator">
+                Average syllables pause duration,
+                Number of long pause,
+                Speaking time,
+                Average Number of words in minutes,
+                Articulation rate,
+                Number of words in minutes,
+                Formants index,
+                Number of detected vowel,
+                percentage correct vowel,
+                Number of pauses,
+                Intonation index,
+                (voiced syll count)/(no of pause),
+                TOEFL Scale Score,
+                Score Shannon index,
+                Speaking rate,
+                </span></b>
+                </h3>
+                <p class="mt-3">And any text can be animated simply by changing an effect name, more info in Documentation!</p>
+            </div>
+            <div class="toggle accordion accordion-shadow mb-5">
+                <div class="ac-item">
+                    <h5 class="ac-title"><i class="fa fa-rocket"></i>Pronunciation posteriori probability score percentage</h5>
+                    <div class="ac-content">
+                        <p class="my-3">{{ mysppron }}</p>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            This is the summery of that you are pronunciation level. Get higher value for this. You are good.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>        
+                </div>
+                <div class="ac-item">
+                    <h5 class="ac-title"><i class="fa fa-rocket"></i>Gender recognition and mood of speech</h5>
+                    <div class="ac-content">
+                        <p class="my-3">{{ myspgend }}</p>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            Available detections are Showing no emotion, speaking passionately and Reading.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ac-item">
+                    <h5 class="ac-title"><i class="fa fa-rocket"></i>Prosodic features of your speech</h5>
+                    <div class="ac-content">
+                        <p class="my-3">{{ prosody }}</p>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            You can check other prosodic features from here.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ac-item">
+                    <h5 class="ac-title"><i class="fa fa-rocket"></i>Detect and count number of syllables</h5>
+                    <div class="ac-content">
+                        <p class="my-3">{{ myspsyl }}</p>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            A unit of pronunciation having one vowel sound, with or without surrounding consonants, forming the whole or a part of a word; for example, there are two syllables in water and three in inferno.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ac-item">
+                    <h5 class="ac-title"><i class="fa fa-rocket"></i>Detect and count number of fillers and pauses</h5>
+                    <div class="ac-content">
+                        <p class="my-3">{{ mysppaus }}</p>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            In speech, filler words are short, meaningless words (or sounds) we use to fill the little pauses that occur while we decide what we're going to say next. They're the ums and uhs and ers that litter our conversations whether we like it or not.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ac-item">
+                    <h5 class="ac-title"><i class="fa fa-rocket"></i>Measure the rate of speech (speed)</h5>
+                    <div class="ac-content">
+                        <p class="my-3">{{ myspsr }}</p>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            Speech rate refers to a person's habitual speaking speed. It's calculated through counting the normal number of words they say per minute, and just like people, words per minute (wpm) can vary hugely
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ac-item">
+                    <h5 class="ac-title"><i class="fa fa-rocket"></i>Measure the articulation (speed)</h5>
+                    <div class="ac-content">
+                        <p class="my-3">{{ myspatc }}</p>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            Articulation is how clearly the speaker pronounces words. 
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ac-item">
+                    <h5 class="ac-title"><i class="fa fa-rocket"></i>Measure speaking time</h5>
+                    <div class="ac-content">
+                        <p class="my-3">{{ myspst }}</p>
+                        <p class="my-3">{{ myspod }}</p>
+                        <p class="my-3">{{ myspbala }}</p>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            From total duration This is your total speaking time.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ac-item">
+                    <h5 class="ac-title"><i class="fa fa-rocket"></i>Measure fundamental frequency distribution mean</h5>
+                    <div class="ac-content">
+                        <p class="my-3">{{ myspf0mean }}</p>
+                        <p class="my-3">{{ myspf0sd }}</p>
+                        <p class="my-3">{{ myspf0med }}</p>
+                        <p class="my-3">{{ myspf0min }}</p>
+                        <p class="my-3">{{ myspf0max }}</p>
+                        <p class="my-3">{{ myspf0q25 }}</p>
+                        <p class="my-3">{{ myspf0q75 }}</p>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            These are fundamental values. If you are aware about these values, use these.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="d-flex justify-content-center">
+                <div class="col-4">
+                    <img src="{% static 'users/images/profile.png' %}" class="img-fluid rounded-circle mx-5" alt="">
+                </div>
+                  
+            </div> 
+            <div class="mt-5 px-5">
+                <h3 class="mx-5">{{ myspgend }}</h3>                    
+            </div>  
+        </div>        
+    </div>
+</div>
+{% endblock content %}

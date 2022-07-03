@@ -1,0 +1,86 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+<div class="content container">
+    <div class="row justify-content-between mb-3 mt-5">
+        <div class="col-lg-7">
+            <h3>
+                What will presently say about your performance?
+                </h3>
+            <p class="lead">By evaluating the feedback provided by Presently, you can get a notion of how well you performed in the uploaded presentation video. 
+                Using Presently you will be able to improve your presenting skills in a variety of areas using this.</p>
+        </div>
+        <div class="col-lg-4 pt-3 text-center">
+            <div class="p-countdown" data-delay="3">
+                <div class="p-countdown-count">
+                    <h4>Uploaded video will be opened in </h4><span
+                        class="count-number display-1"></span>
+                </div>
+                <div class="p-countdown-show"><a href="#modalVideo" data-lightbox="inline"
+                        class="btn btn-outline btn btn-shadow">View your uploaded Video again</a></div>
+            </div>
+
+            <div id="modalVideo" class="modal modal-auto-open" data-delay="3000"
+                style="max-width: 700px; min-height:380px">
+                <div class="p-t-30 text-center">
+                    {% for x in all %}
+                    <h2 class="m-b-0">Video Review</h2>
+                    <h5 class="mb-4">Check out your uploaded {{x.caption}} presentation</h5>
+                    <div class="video-wrap m-b-20">
+                        <video id="video-js" class="video-js" controls loop preload="false"
+                            poster="">
+                            <source src="{{x.video.url}}" type="video/mp4" />
+                            <source src="{{x.video.url}}" type="video/webm" />
+                        </video>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- <div class="col-4">
+        {% for x in all %}
+        <h3 class="text-center mt-2 mb-2">{{x.caption}}</h3>
+        <video class="embed-responsive embed-responsive-16by9" controls="controls">
+            <source src="{{x.video.url}}" type="video/mp4" />
+        </video>
+        {% endfor %}
+    </div>     -->
+    <div class="line"></div>
+    <div class="heading-text heading-line text-center pb-3">
+        <h3>Presently Options</h3>
+    </div>
+    <div class="team-members team-members-shadow d-flex mt-5">
+        <div class="team-member col-4 mx-2">
+            <div class="team-desc">
+                <h2>Pronunciation & Vocabulary errors </h3>
+                <p>Presently will check for possible pronunciation and vocabulary errors during the presentation</p>
+                <div class="align-center">
+                    <a class="btn btn-primary" href="{% url 'pronuciation' %}" type="submit">View more</a>
+                </div>
+            </div>
+        </div>
+        <div class="team-member col-4 mx-2">
+            <div class="team-desc">
+                <h2>Emotion Detection from Audio</h2>
+                <p>The audio file is used to detect emotions and prosody levels</p>
+                <div class="align-center">
+                    <a class="btn btn-primary" href="{% url 'emotionaudio' %}" type="submit">View more</a>
+                </div>
+            </div>
+        </div>
+        <div class="team-member col-4 mx-2">
+            <div class="team-desc">
+                <h2>Emotion Detection from Video</h2>
+                <p>Emotions and hand gestures are detected using the video files</p>
+                <div class="align-center">
+                    <a class="btn btn-primary" href="{% url 'emotionvideo' %}">View more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

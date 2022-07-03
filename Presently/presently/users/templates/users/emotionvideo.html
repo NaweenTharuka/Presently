@@ -1,0 +1,39 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <nav aria-label="breadcrumb mt-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'feedback' %}">Dashboard</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Emotion-predictions(Video)</li>
+        </ol>
+    </nav>
+    <div class="heading-text heading-line text-center mt-5">
+        <h4>Summary of Emotions</h4>
+    </div>
+
+    <div class="text-center py-4">
+        <h2>The Most used Emotion for this session: <span style="color:rgb(25, 143, 216)">{{ maxemotion }}</span></h2>
+    </div>    
+
+    <div class="row pb-5">
+        {% for key, value in predictions.items %}
+        
+            <div class="col-lg-3 text-center"> <span class="pie-chart" data-percent="{{ value }}"> <span
+                class="percent"></span> </span>
+                <h4>{{ key }}</h4>
+                <p>percent: {{ value }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <hr/>
+        
+    <div class="d-flex justify-content-center mb-5">
+        <a class="btn btn-primary" href="{% url 'handgestures' %}" type="submit">Usage of hand gestures</a>
+        <a class="btn btn-outline" href="{% url 'overallfeedback' %}" type="submit">View Summary Detail</a>
+    </div> 
+</div>
+
+{% endblock content %}

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+{% load static %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="INSPIRO" />
+	<meta name="description" content="Themeforest Template Polo" />
+	<link href="{% static 'users/assets/css/plugins.css' %}" rel="stylesheet" />
+	<link href="{% static 'users/assets/css/style.css' %}" rel="stylesheet" />
+
+	<meta charset="UTF-8">
+	<title>Presently</title>
+	<link rel="stylesheet" href="{% static 'users/assets/css/styles.css' %}" type="text/css">
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@oomphinc">
+	<meta name="og:title" content="ColorCube: Evaluate Accessible Color Palettes">
+	<meta name="twitter:title" content="ColorCube: Evaluate Accessible Color Palettes">
+	<meta name="og:description"
+		content="Adjust color values to meet WCAG Level AA or AAA standards for legible color combinations.">
+	<meta name="twitter:description"
+		content="Adjust color values to meet WCAG Level AA or AAA standards for legible color combinations.">
+	<meta name="og:image" content="assets/img/ColorCube-screenshot.png">
+	<meta name="twitter:image" content="assets/img/ColorCube-screenshot.png">
+	<meta name="twitter:image:alt" content="We are sorry, but this tool is not optimized for the visually impaired.">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="{% static 'users/assets/js/detection.js' %}"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="{% static 'users/assets/css/main.css' %}" />
+</head>
+
+<body>
+
+	<!-- <header id="header" class="lite">
+			<div class="header-inner">
+			  <div class="container">
+				<div id="logo">
+					<img src="{% static 'users/assets/images/logo.png' %}" class="img-fluid" style="width: 300px;">
+				</div>
+	
+				<div id="search">
+				  <a
+					id="btn-search-close"
+					class="btn-search-close"
+					aria-label="Close search form"
+					><i class="icon-x"></i
+				  ></a>
+				  <form
+					class="search-form"
+					action="https://inspirothemes.com/polo/search-results-page.html"
+					method="get"
+				  >
+					<input
+					  class="form-control"
+					  name="q"
+					  type="search"
+					  placeholder="Type & Search..."
+					/>
+					<span class="text-muted"
+					  >Start typing & press "Enter" or "ESC" to close</span
+					>
+				  </form>
+				</div>
+	
+				<div class="header-extras">
+				  <ul>
+					<li>
+					  <a id="btn-search" href="#"> <i class="icon-search"></i></a>
+					</li>
+					<li>
+					  <div class="p-dropdown">
+						<a href="#"><i class="icon-globe"></i><span>EN</span></a>
+						<ul class="p-dropdown-content">
+						  <li><a href="#">French</a></li>
+						  <li><a href="#">Spanish</a></li>
+						  <li><a href="#">English</a></li>
+						</ul>
+					  </div>
+					</li>
+				  </ul>
+				</div>
+	
+				<div id="mainMenu-trigger">
+				  <a class="lines-button x"><span class="lines"></span></a>
+				</div>
+	
+				<div id="mainMenu">
+				  <div class="container">
+					<nav>
+					  <ul>
+						<li><a href="index-2.html">Home</a></li>
+						<li><a href="index-2.html">Contact Us</a></li>
+						<li><a href="index-2.html">About Us</a></li>
+						<li><a href="index-2.html">Profile</a></li>
+					  </ul>
+					</nav>
+				  </div>
+				</div>
+			  </div>
+			</div> 
+			</header> -->
+	<nav aria-label="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="breadcrumb-item"><a href="http://127.0.0.1:8000/">Home</a></li>
+			<li class="breadcrumb-item"><a href="http://127.0.0.1:8000/feedback/slide-checker">Dashboard</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Color Accuracy</li>
+		</ul>
+	</nav>
+	<div class="l__max u__space__outer cc__brand">
+		<h2 class="cc__brand__title"> </h2>
+
+	</div>
+
+	<main class="l__main p__main">
+		<article class="l__max u__space__outer">
+
+			<form action="/" class="u__space__outer u__space__vertical cc__form" method="post">
+				{% csrf_token %}
+				<div class="g__row">
+					{{form.as_p}}
+					<div class="g__col g--three rhythm">
+						<h2>Step 1:</h2>
+						<p>Detect HEX colors from the input image. </p>
+
+						<!--Here is where the user uploads-->
+						<div>
+							Upload as many images as you would like.
+						</div>
+						<br>
+
+						<input type="file" id="files" name="files[]" multiple />
+						<br>
+						<output id="list"></output>
+
+						<!--This script has to be called after the file input is initialized-->
+						<script>
+							document.getElementById('files').addEventListener('change', handleFileSelect, false);
+						</script>
+
+						<!--This is where the image will technically go when we're taking color information from it (standard HTML5)-->
+						<canvas id="canvas" style="display: none;" width="150" height="150"></canvas>
+
+						<!--This is where the colors will show up-->
+						<div id="theme">
+							<p id="message"></p>
+
+							<!--Something curious about this is if you keep clicking on the image,
+			you'll get the same colors, but sometimes in a different order.-->
+							<div id="pickedColor" class="colorResults"></div>
+							<div id="color1" class="colorResults"></div>
+							<div id="color2" class="colorResults"></div>
+							<div id="color3" class="colorResults"></div>
+
+						</div>
+						<br>
+						<br>
+						<div id="scheme">
+							<br>
+							<br>
+							<br>
+							<br>
+							<p>
+								Generated Mono Color Scheme
+							</p>
+							<div class="swatches">
+								<div class="swatch" id="s0"></div>
+								<div class="swatch" id="s1"></div>
+								<div class="swatch" id="s2"></div>
+								<div class="swatch" id="s3"></div>
+								<div class="swatch" id="s4"></div>
+								<div class="swatch" id="s5"></div>
+								<div class="swatch" id="s6"></div>
+								<div class="swatch" id="s7"></div>
+								<div class="swatch" id="s8"></div>
+								<div class="swatch" id="s9"></div>
+
+								<input type="text" id="ts3" class="inputField">
+								<input type="text" id="ts0" class="inputField">
+								<input type="text" id="ts1" class="inputField">
+								<input type="text" id="ts2" class="inputField">
+								<textarea style="display: none;" name="" id="txtArea" cols="10" rows="5"></textarea>
+
+
+							</div>
+
+
+						</div>
+						<div>
+							<div class="g__col g--three">
+								<div class="cc__form__row">
+									<label class="cc__form__label" for="white-value">Light</label>
+									<input class="cc__form__input" type="text" id="white-value" name="white-value"
+										value="#FFFFFF" required />
+								</div>
+								<div class="cc__form__row">
+									<label class="cc__form__label" for="black-value">Dark</label>
+									<input class="cc__form__input" type="text" id="black-value" name="black-value"
+										value="#101010" required />
+								</div>
+							</div>
+
+						</div>
+
+						<!-- Submit Button -->
+						<div class="cc__form__submit g--wide text-align-center">
+							<input id="brand-color-button" name="brand-color-button" type="submit"
+								class="cc__form__button" value="Get Ratios">
+						</div>
+
+					</div>
+			</form>
+
+			<div id="results-content" class="u__space__vertical--bottom cc__results">
+				<div class="u__space__outer cc__results__description">
+					<h2 class="cc__results__title u__space__vertical--bottom">Step 2: Review colors!</h2>
+					<div class="g__row">
+						<div class="g__col g--two rhythm">
+							<h3>Criteria</h3>
+							<p>This shows three different ratio targets and how color performs with each
+								— white, black, or other colors in the palette:</p>
+							<ul>
+								<li><strong class="text-light">WCAG Level AAA:</strong> a contrast ratio equal or
+									greater than <strong>7.0</strong>. For large-scale text, a ratio equal or greater
+									than <strong>4.5</strong>.</li>
+								<li><strong class="text-light">WCAG Level AA:</strong> a contrast ratio equal or greater
+									than <strong>4.5</strong>. For large-scale text, a ratio equal or greater than
+									<strong>3.0</strong>.</li>
+								<li>Text that is considered “Large-scale” is <strong>18 points (24px)</strong> or larger
+									or <strong>14 points (19px) and bold</strong> or larger.</li>
+							</ul>
+						</div>
+						<div class="g__col g--two rhythm">
+							<p>For more details about success criteria, see the <a
+									title="Go to w3 website in a new window" target="_blank"
+									href="https://www.w3.org/TR/WCAG21/#contrast-minimum">WCAG 2.1 minimum contrast
+									ratios</a> page.</p>
+
+							<h3>Modify with HSL</h3>
+							<p><strong>Why HSL?</strong> By modifying primarily the saturation and/or lightness, the
+								original intention of the color is intact. To modify the Hue would be to start to modify
+								the color from a blue to a blue-green, or from a red to an orange. Of course, modify the
+								Hue as you wish as well, but our intention is to show how small movements to the
+								saturation and lightness can increase accessibility while retaining the intention of the
+								brand color. <a href="https://www.nixsensor.com/what-is-hsl-color/" target="_blank">More
+									about how HSL works</a>.</p>
+						</div>
+					</div>
+				</div>
+
+				<div id="results-output" class="u__space__vertical--top cc__results__content"></div>
+
+				<div class="l__max--text u__space__outer u__space__vertical--top rhythm cc__results__description">
+					<h3>Edge values</h3>
+					<p>Be careful with <strong class="text-light">EDGE</strong> values &mdash; the color passes
+						validation, but is within 0.5. It may still present a legibility issue even though it gets a
+						passing grade. </p>
+
+					<h3>Most legible Pair</h3>
+					<p>From the given list of colors, which color combination is the <em>most legible</em>? This does
+						not mean that the color pair will pass minimum requirements, but it has the best chance of
+						passing. </p>
+					<p><strong class="text-light">Custom:</strong> Use the text input to change the color pairing.</p>
+
+					<h3>Check your hover text color vs. your body text color</h3>
+					<p>If <a title="Go to Webaim.org, link opens in a new window." target="_blank"
+							href="http://webaim.org/techniques/hypertext/link_text#appearance">links are not
+							underlined</a>, there must be 3:1 contrast between link text and body text and also an
+						additional change (e.g., underlining) on mouse hover and keyboard focus. Use the tool to compare
+						your link color against your body text color to see how they pair in the Most Legible column.
+					</p>
+				</div>
+			</div>
+
+		</article>
+	</main>
+
+
+
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="assets/js/tinycolor.js"></script>
+	<script type="text/javascript" src="assets/js/colorcube.js"></script>
+	<script>
+		(function (i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function () {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o),
+				m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', 'UA-43388256-3', 'auto');
+		ga('send', 'pageview');
+	</script>
+</body>
+<footer id="footer">
+	<div class="footer-content">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="widget">
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="copyright-content">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="social-icons social-icons-colored float-left">
+						<ul>
+							<li class="social-rss">
+								<a href="#"><i class="fa fa-rss"></i></a>
+							</li>
+							<li class="social-facebook">
+								<a href="#"><i class="fab fa-facebook-f"></i></a>
+							</li>
+							<li class="social-twitter">
+								<a href="#"><i class="fab fa-twitter"></i></a>
+							</li>
+							<li class="social-vimeo">
+								<a href="#"><i class="fab fa-vimeo"></i></a>
+							</li>
+							<li class="social-youtube">
+								<a href="#"><i class="fab fa-youtube"></i></a>
+							</li>
+							<li class="social-pinterest">
+								<a href="#"><i class="fab fa-pinterest"></i></a>
+							</li>
+							<li class="social-gplus">
+								<a href="#"><i class="fab fa-google-plus-g"></i></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="copyright-text text-center">
+						&copy; 2021 Presently - Personal Trainer App
+						All Rights Reserved.
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+</div>
+</div>
+
+<a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+
+</html>

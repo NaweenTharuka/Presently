@@ -1,0 +1,260 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    
+    <div id="slider" class="inspiro-slider slider-fullscreen dots-creative" data-height-xs="360">
+      <div class="slide kenburns" data-bg-parallax="{% static 'users/images/wallpaper.png' %}">
+          <div class="bg-overlay"></div>
+          <div class="container">
+
+              <div class="slide-captions text-light">
+
+                  <span data-animate="fadeInUp" data-animate-delay="300" class="strong"><a href="#" class="business"><span class="business">Let's Do This</span></a>
+                  </span>
+
+                  <h1 data-animate="fadeInUp" data-animate-delay="600">
+                      A personal trainer app <br/>to self-train and improve presentation skills
+                  </h1>
+
+                  <div data-animate="fadeInUp" data-animate-delay="900">
+                      <button type="button" class="btn btn-rounded btn-reveal btn-reveal-left">
+                      <span>Learn More</span><i class="icon-chevron-right"></i>
+                      </button>
+                  </div>
+
+                  <div class="row" style="padding-top: 14%">
+                      <div class="col-lg-3" data-animate="fadeInUp" data-animate-delay="1200">
+                          <h4>Acceptable Pronunciation</h4>
+                          <p>To provide a user with incorrect pronunciation and vocabulary mistakes and to detect the user what emotions and enhancements used to present the story.</p>
+                      </div>
+                      <div class="col-lg-3" data-animate="fadeInUp" data-animate-delay="1500">
+                          <h4>Acceptable Emotions</h4>
+                          <p>To detect user, the match or mismatch between topic tone and emotions used to present the story.</p>
+                      </div>
+                      <div class="col-lg-3" data-animate="fadeInUp" data-animate-delay="1800">
+                          <h4>Slide Quality</h4>
+                          <p>To check the grammar and spellings in presentation slides.</p>
+                      </div>
+                      <div class="col-lg-3" data-animate="fadeInUp" data-animate-delay="2100">
+                          <h4>overall Feedback</h4>
+                          <p>Share both positive and constructive specific points of feedback with the presenter.</p>
+                      </div>
+                  </div>
+
+              </div>
+
+          </div>
+      </div>
+    </div>  
+    
+    <div class="container carousel arrows-visibile testimonial testimonial-single testimonial-blockquote" data-items="1" data-autoplay="true" data-animate-in="fadeIn" data-animate-out="fadeOut" data-loop="true">
+      <div class="testimonial-item">
+          <p>
+            You’re really have the natural ability to hand out presentation material in a very organised way! Good job!
+          </p>  
+      </div>
+
+      <div class="testimonial-item">
+          <p>
+            Your content was relevant and your format was visually appealing and easy to follow and understand.
+               Great job! You’re a real designer at heart!
+          </p> 
+      </div>
+
+      <div class="testimonial-item">
+          <p>
+            You always remain consistent with every presentation, whether it be one on ones, 
+            small group chats, with peers, direct reports and the company bosses. 
+            you have no problem presenting in any one of these situations. Well done!
+          </p>    
+      </div>
+    </div>
+
+    <div class="container my-5">
+
+      {% if user.is_authenticated %}
+        <div class="heading-text heading-section text-center py-5">
+          <h2>Want to evaluate your skills ?</h2>
+          <span class="lead">Upload your presentation here!</span>
+        </div>
+
+        <div> 
+          <div class="d-flex">
+
+            <div class="col-6 mx-2">  
+              <h4 class="mb-4">Upload Video/Audio file</h4>
+              <div>
+                  <form action="." method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="dropzone p-5" id="videoupload">
+                      {{form.as_p}}
+                    </div> 
+                    <div>
+                      <small id="dropzoneHelp" class="form-text text-muted">Max file size is 200MB and max number of files is 1.</small> 
+                    </div>
+                    <button class="btn btn-light mt-3" id="" type="submit">Upload</button>
+                  </form>  
+              </div>
+            </div>
+
+            <div class="col-6 mx-2">  
+                <h4 class="mb-4">Upload Presentation file</h4>
+                <div>
+                    <form id="fileUpload2" action="https://inspirothemes.com/file-upload" class="dropzone">
+                    <div class="fallback">
+                        <input name="file" type="file" multiple />
+                    </div>
+                    </form>
+                    <small id="dropzoneHelp" class="form-text text-muted">Max file size is 2MB and max number of files is 10.</small>
+                </div>
+                <a href="{% url 'slidecheckerdashboard' %}" class="btn btn-light mt-3" id="" type="submit">Upload</a>
+            </div>
+
+          </div>
+
+          <div class="line mb-5"></div>
+        </div>  
+      {% else %}
+        <div class="heading-text heading-section text-center py-5">
+          <h2>Want to evaluate your skills ?</h2>
+          <a id="non-login-link" href="{% url 'register' %}"><h4>Create your own account and log in</h4></a>
+          <div class="d-flex justify-content-center">
+            <div class="col-4">
+              <img src="{% static 'users/images/logo.png' %}" class="img-fluid">
+            </div>
+          </div>  
+        </div>
+      {% endif %}    
+    </div>
+    
+    <section class="p-t-100 p-b-100" style="background-image: url({% static 'users/images/title-banner.png' %});">
+      <div class="bg-overlay"></div>
+          <div class="container xs-text-center sm-text-center text-light">
+              <div class="row">
+                  <div class="col-lg-5 p-b-60">
+                      <h2>How Presently will assist you?</h2>
+                      <p class="lead">
+                        We will review your presentation video and provide you feedback on the pronunciation and vocabulary mistakes you made throughout the speech, as well as on how you used different emotions in your voice and face, as well as hand gestures and prosody aspects while presenting. 
+                        You may also upload your presentation slides to Presently to evaluate the aesthetic and slide quality.
+                      </p>
+                      <a href="#services" class="btn btn-light btn-outline btn-rounded">Our Services</a>
+                  </div>
+                  <div class="col-lg-7">
+                      <div class="row">
+                          <div class="col-lg-6">
+                              <div class="text-center">
+                                  <div class="counter text-lg">
+                                      <span data-speed="3000" data-refresh-interval="50" data-to="200" data-from="20" data-seperator="true"></span>
+                                  </div>
+                                  <div class="seperator seperator-small"></div>
+                                  <p>REVIEWS</p>
+                              </div>
+                          </div>
+                          <div class="col-lg-6">
+                              <div class="text-center">
+                                  <div class="counter text-lg">
+                                      <span data-speed="4500" data-refresh-interval="23"  data-to="365" data-from="100" data-seperator="true"></span>
+                                  </div>
+                                  <div class="seperator seperator-small"></div>
+                                      <p>USERS</p>
+                              </div>
+                          </div>
+                          <div class="col-lg-6">
+                              <div class="text-center">
+                                  <div class="counter text-lg">
+                                      <span data-speed="3000" data-refresh-interval="12" data-to="75" data-from="50" data-seperator="true"></span>
+                                  </div>
+                                  <div class="seperator seperator-small"></div>
+                                  <p>FEATURES</p>
+                              </div>
+                          </div>
+                          <div class="col-lg-6">
+                              <div class="text-center">
+                                  <div class="counter text-lg">
+                                      <span data-speed="4550" data-refresh-interval="50" data-to="4" data-from="0" data-seperator="true"></span>
+                                  </div>
+                                  <div class="seperator seperator-small"></div>
+                                      <p>RATINGS</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                   </div>
+              </div>
+    </section>
+
+    <section>
+      
+      <div class="container mb-5">
+          <div class="heading-text heading-section text-center py-5">
+              <h2>WHAT WE DO</h2>
+              <span class="lead">How do you give a good presentation? This is how to succeed!</span>
+          </div>
+
+          <div class="row">
+
+            <div class="col-lg-4">
+              <div>
+                <h4>Pronunciation analyzing </h4>
+                <p>
+                  To provide a user with incorrect pronunciation to detect the user what emotions 
+                  and enhancements used to present the story. 
+                </p>  
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div>
+                <h4>Vocabulary error analyzing</h4>
+                <p>
+                  Evaluation of vocabulary mistakes in enhancing the audience's understanding of the presentation
+                </p>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div>
+                <h4>Emotion Detection</h4>
+                <p>
+                  Implement more accurate and intelligent application to identify presenters’ emotion and prosody levels.
+                </p>
+              </div>
+            </div>
+            
+            <div class="col-lg-4">
+              <div>
+                <h4>Slide quality</h4>
+                <p>
+                  To create self-train web application to cater personal coach to check presentation slide 
+                  quality by analyzing input pptx.
+                </p>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div>
+                <h4>Content analyzing </h4>
+                <p>
+                  To suggest the user how to attract audience effectively by analyzing slides for accuracy of content 
+                  and aesthetics using computer vision and rules of design-best-practices
+                </p>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div>
+                <h4>Final Feedback</h4>
+                <p>
+                  Provide the Users with the overrol feedback of the performance by analyzing the uplaoded 
+                  video or audio slides.      
+                </p>
+              </div>
+            </div>
+
+          </div>
+      </div>
+
+    </section>
+
+{% endblock content %}

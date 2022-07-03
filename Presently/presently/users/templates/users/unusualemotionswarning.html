@@ -1,0 +1,97 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <nav aria-label="breadcrumb mt-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'feedback' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'emotionaudio' %}">Emotion-predictions(Audio)</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Warning-emotions(Audio)</li>
+        </ol>
+    </nav>
+    <div class="heading-text heading-section text-center py-3">
+        <h4>Unusual Emotion Detections - Audio</h4>
+    </div>
+
+    <div class="row pricing-table">
+        <div class="col-lg-3 col-md-12 col-12">
+            <div class="plan">
+                <div class="plan-header" style="background-color: #ffeb3b;">
+                    <h4>Disgust</h4>
+                    <div class="plan-price p-0">84<span>/percent</span> </div>
+                </div>
+                <div class="plan-list p-0" style="background-color: rgba(207, 207, 196, 0.692);">
+                    <ul>
+                        <li><i class="fa fa-signal"></i>Time period: 00:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-12 col-12">
+            <div class="plan">
+                <div class="plan-header" style="background-color: #ffeb3b;">
+                    <h4>Surprise</h4>
+                    <div class="plan-price p-0">88<span>/percent</span> </div>
+                </div>
+                <div class="plan-list p-0" style="background-color: rgba(207, 207, 196, 0.692);">
+                    <ul>
+                        <li><i class="fa fa-signal"></i>Time period: 00:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-12 col-12">
+            <div class="plan">
+                <div class="plan-header" style="background-color: #ffeb3b;">
+                    <h4>Fearful</h4>
+                    <div class="plan-price p-0">90<span>/percent</span> </div>
+                </div>
+                <div class="plan-list p-0" style="background-color: rgba(207, 207, 196, 0.692);">
+                    <ul>
+                        <li><i class="fa fa-signal"></i>Time period: 00:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-12 col-12">
+            <div class="plan">
+                <div class="plan-header" style="background-color: #ffeb3b;">
+                    <h4>Sad</h4>
+                    <div class="plan-price p-0">84<span>/percent</span> </div>
+                </div>
+                <div class="plan-list p-0" style="background-color: rgba(207, 207, 196, 0.692);">
+                    <ul>
+                        <li><i class="fa fa-signal"></i>Time period: 00:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-12 col-12">
+            <div class="plan">
+                <div class="plan-header" style="background-color: #ffeb3b;">
+                    <h4>Suprice</h4>
+                    <div class="plan-price p-0">81<span>/percent</span> </div>
+                </div>
+                <div class="plan-list p-0" style="background-color: rgba(207, 207, 196, 0.692);">
+                    <ul>
+                        <li><i class="fa fa-signal"></i>Time period: 00:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="d-flex justify-content-center mb-5">
+        <a class="btn btn-outline" href="{% url 'overallfeedback' %}" type="submit">View summery detail</a>
+    </div>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,28 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="heading-text heading-section text-center py-5">
+            <h2>USER PROFILE</h2>
+            <span class="lead">How do you give a good presentation? This is how to succeed!</span>
+        </div>
+
+        <div class="d-flex mb-5">
+            <div class="col-3">
+                <img src="{% static 'users/images/profile.png' %}" class="img-fluid">
+            </div>    
+            <div class="col-9 px-4 d-flex align-items-center">
+                <div>
+                    <h3><b>User Name</b> : {{user.username}}</h3>
+                    <h3><b>Email</b> : {{user.email}}</h3>
+                    <div class="my-5">
+                        <a class="btn btn-info" href="{% url 'feedback' %}" type="submit">Watch your Uploaded Videos</a>
+                        <!-- <a class="btn btn-info" href="{% url 'test' %}" type="submit">TEST</a> -->
+                    </div>   
+                </div>    
+            </div>
+        </div>     
+    </div>
+{% endblock %}
