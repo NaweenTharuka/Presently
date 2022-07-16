@@ -87,18 +87,21 @@ def run(video_path):
     audio_path = V2A(video_path) 
     english_checker = EnglishChecker()
     transcription, grammer_corrected = english_checker.checker(audio_path)
+    print("Component 1 Done !!!")
 
     _, emotion_logits_video = detect_emotions_video(video_path, 50)
     body_language_decoder(video_path)
+    print("Component 2 Done !!!")
 
     _, emotion_logits_audio = detect_emotions_audio(audio_path)
     prosody_context = prosody_execution(audio_path)
+    print("Component 3 Done !!!")
 
     return transcription, emotion_logits_video, emotion_logits_audio, prosody_context, grammer_corrected
 
 transcription, emotion_logits_video, emotion_logits_audio, prosody_context, grammer_corrected = run('videos/new.mp4')
-print(transcription)
-print(emotion_logits_video)
-print(emotion_logits_audio)
-print(prosody_context)
-print(grammer_corrected)
+# print(transcription)
+# print(emotion_logits_video)
+# print(emotion_logits_audio)
+# print(prosody_context)
+# print(grammer_corrected)

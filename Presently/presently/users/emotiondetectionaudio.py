@@ -51,10 +51,10 @@ def preprocess(file_path, frame_length = 2048, hop_length = 512):
     f1 = librosa.feature.rms(final_x, frame_length=frame_length, hop_length=hop_length, center=True, pad_mode='reflect').T 
     f2 = librosa.feature.zero_crossing_rate(final_x, frame_length=frame_length, hop_length=hop_length,center=True).T 
     f3 = librosa.feature.mfcc(final_x, sr=sr, S=None, n_mfcc=13, hop_length = hop_length).T
+
     X = np.concatenate((f1, f2, f3), axis = 1)
     
     X_3D = np.expand_dims(X, axis=0)
-    
     return X_3D
 
 def predictions(X_3D):
