@@ -5,8 +5,14 @@ import sys
 import pandas as pd
 import numpy as np
 
-location_videofile = "F:\\CDAP-PRESENTLY\\21_22-j-02\\Presently\\presently\\media\\video\\22\\publicspeech.mp4"
-cascPath = "F:\\CDAP-PRESENTLY\\21_22-j-02\\Presently\\presently\\users\\models\\abc.xml"
+import cv2
+from tensorflow.keras.models import load_model
+                
+################################ Variables & Paramaters #####################################
+CASC_PATH = "models/harr_feature.xml"
+MODEL_PATH = "models/emotion_detection_video.h5"
+  
+############################# Load Emotion Detection VIDEO ##################################
 
 def _get_labels():
   return {
@@ -35,9 +41,9 @@ def tosquare(bbox):
         return (x, y, w, h)
 
 def __apply_offsets(face_coordinates):
-  x, y, width, height = face_coordinates
-  x_off, y_off = (10, 10)
-  return (x - x_off, x + width + x_off, y - y_off, y + height + y_off)
+    x, y, width, height = face_coordinates
+    x_off, y_off = (10, 10)
+    return (x - x_off, x + width + x_off, y - y_off, y + height + y_off)
 
 def __preprocess_input(x, v2=False):
         x = x.astype("float32")
@@ -64,95 +70,88 @@ def pad(image):
         )
         return padded_image
 
-from collections import OrderedDict
-from matplotlib import pyplot as plt
-import cv2
-from tensorflow.keras.models import load_model
-def detect_emotions(location_videofile, NumberofFrames):
 
-  PADDING = 40
-  emotion_labels = _get_labels()
-  arry = {}
+def detect_emotions_video(location_videofile, NumberofFrames):
+    PADDING = 40
+    emotion_labels = _get_labels()
+    arry = {}
 
-  vidcap = cv2.VideoCapture(location_videofile)
+    vidcap = cv2.VideoCapture(location_videofile)
 
-  success,image = vidcap.read()
-  frame_count = vidcap.get(cv2.CAP_PROP_FRAME_COUNT)
-  count = 0
-  faceCascade = cv2.CascadeClassifier(cascPath)
+    success,image = vidcap.read()
+    frame_count = vidcap.get(cv2.CAP_PROP_FRAME_COUNT)
+    count = 0
+    faceCascade = cv2.CascadeClassifier(CASC_PATH)
 
-  while vidcap.isOpened():
-      score = 0
-      success,image = vidcap.read()
+    while vidcap.isOpened():
+        score = 0
+        success,image = vidcap.read()
 
-      if success:
-          if frame_count > NumberofFrames+1:
-            count += frame_count/(NumberofFrames+1) 
-          else:
-            count += 1
-          vidcap.set(cv2.CAP_PROP_POS_FRAMES, count)
-          gray_image_array = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-          faces = faceCascade.detectMultiScale(
-          gray_image_array,
-          scaleFactor=1.1,
-          minNeighbors=5,
-          minSize=(30, 30))
+        if success:
+            if frame_count > NumberofFrames+1:
+              count += frame_count/(NumberofFrames+1) 
+            else:
+              count += 1
+            vidcap.set(cv2.CAP_PROP_POS_FRAMES, count)
+            gray_image_array = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            faces = faceCascade.detectMultiScale(
+            gray_image_array,
+            scaleFactor=1.1,
+            minNeighbors=5,
+            minSize=(30, 30))
 
-          if len(faces) == 1:
-            gray_img = pad(gray_image_array)
+            if len(faces) == 1:
+              gray_img = pad(gray_image_array)
 
-            emotions = []
-            for face_coordinates in faces:
-                face_coordinates = tosquare(face_coordinates)
-                x1, x2, y1, y2 = __apply_offsets(face_coordinates)
-                
-                x1 += PADDING
-                x2 += PADDING
-                y1 += PADDING
-                y2 += PADDING            
-                x1 = np.clip(x1, a_min=0, a_max=None)
-                y1 = np.clip(y1, a_min=0, a_max=None)
+              emotions = []
+              for face_coordinates in faces:
+                  face_coordinates = tosquare(face_coordinates)
+                  x1, x2, y1, y2 = __apply_offsets(face_coordinates)
+                  
+                  x1 += PADDING
+                  x2 += PADDING
+                  y1 += PADDING
+                  y2 += PADDING            
+                  x1 = np.clip(x1, a_min=0, a_max=None)
+                  y1 = np.clip(y1, a_min=0, a_max=None)
 
-                gray_face = gray_img[max(0, y1 - PADDING):y2 + PADDING,
-                                    max(0, x1 - PADDING):x2 + PADDING]
-                gray_face = gray_img[y1:y2, x1:x2]
+                  gray_face = gray_img[max(0, y1 - PADDING):y2 + PADDING,
+                                      max(0, x1 - PADDING):x2 + PADDING]
+                  gray_face = gray_img[y1:y2, x1:x2]
 
-                emotion_model = "F:\\CDAP-PRESENTLY\\21_22-j-02\\Presently\\presently\\users\\models\\model.h5"
-                model = load_model(emotion_model, compile=compile)
-                model.make_predict_function()
+                  model = load_model(MODEL_PATH, compile=True)
+                  model.make_predict_function()
 
-                try:
-                  gray_face = cv2.resize(gray_face, model.input_shape[1:3])
-                except Exception as e:
-                  print("Cannot resize "+str(e))
-                  continue
-                
-                gray_face = __preprocess_input(gray_face, True)
-                gray_face = np.expand_dims(np.expand_dims(gray_face, 0), -1)
+                  try:
+                    gray_face = cv2.resize(gray_face, model.input_shape[1:3])
+                  except Exception as e:
+                    print("Cannot resize "+str(e))
+                    continue
+                  
+                  gray_face = __preprocess_input(gray_face, True)
+                  gray_face = np.expand_dims(np.expand_dims(gray_face, 0), -1)
 
-                emotion_prediction = model.predict(gray_face)[0]
-                labelled_emotions = {
-                    emotion_labels[idx]: round(float(score), 2)
-                    for idx, score in enumerate(emotion_prediction)
-                }
+                  emotion_prediction = model.predict(gray_face)[0]
+                  labelled_emotions = {
+                      emotion_labels[idx]: round(float(score), 2)
+                      for idx, score in enumerate(emotion_prediction)
+                  }
 
-                emotions.append(
-                    dict(box=face_coordinates, emotions=labelled_emotions)
-                )
-            top_emotions  = [max(e["emotions"], key=lambda key: e["emotions"][key]) for e in emotions]
-            if len(top_emotions):
-              for top_emotion in emotions[0]["emotions"]:
-                if top_emotion in arry.keys():
-                  arry.update({top_emotion: arry[top_emotion] + emotions[0]["emotions"][top_emotion]})
-                else:
-                  arry[top_emotion] = score
+                  emotions.append(
+                      dict(box=face_coordinates, emotions=labelled_emotions)
+                  )
+              top_emotions  = [max(e["emotions"], key=lambda key: e["emotions"][key]) for e in emotions]
+              if len(top_emotions):
+                for top_emotion in emotions[0]["emotions"]:
+                  if top_emotion in arry.keys():
+                    arry.update({top_emotion: arry[top_emotion] + emotions[0]["emotions"][top_emotion]})
+                  else:
+                    arry[top_emotion] = score
 
-      else:
-          vidcap.release()
-          break
-  if len(arry) == 0:
-    return "Cannot detect emotion", arry
-  else:
-    return max(arry, key=arry.get), arry
-
-emo, arr1 = detect_emotions(location_videofile, 50)
+        else:
+            vidcap.release()
+            break
+    if len(arry) == 0:
+      return "Cannot detect emotion", arry
+    else:
+      return max(arry, key=arry.get), arry
