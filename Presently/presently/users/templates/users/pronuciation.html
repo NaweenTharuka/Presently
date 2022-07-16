@@ -30,7 +30,7 @@
                 aria-labelledby="home-tab">
                 <h2 class="pb-5">You have said..</h2>
                 <div class="pb-5 mx-5">
-                    <h4 style="color: grey;">" {{ stt }} "</h4>
+                    <h4 style="color: grey;"></h4>
                 </div>
 
                 <div class="py-5">
@@ -41,13 +41,20 @@
                     <div id="particles-dots" class="particles"></div>
                     <div class="container">
                         <div class="heading-text text-light px-5">
-                            <h4>{{ result }}</h4>
+                            <h4>{{ grammer_corrected }}</h4>
                         </div>
                     </div>
                 </section>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                
+                <section class="background-colored">
+                    <div id="particles-dots" class="particles"></div>
+                    <div class="container">
+                        <div class="heading-text text-light px-5">
+                            <h4>{{ transcription }}</h4>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
