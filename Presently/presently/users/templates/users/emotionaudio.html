@@ -13,32 +13,6 @@
     <div class="heading-text heading-section text-center py-3">
         <h4>Emotion & Prosody Detection - Audio</h4>
         <span class="lead">See what presently think about your presentation</span>
-    </div> 
-    <div class="d-flex">
-        <div class="col-5">
-            <div id="modalVideo" style="max-width: 700px; min-height:380px">
-                <div class="p-t-30 text-center">
-                    {% for x in all %}
-                    <h2 class="mb-3">Video Review</h2>
-                    <div class="video-wrap m-b-20">
-                        <video id="video-js" class="video-js" controls loop preload="false"
-                            poster="">
-                            <source src="{{x.video.url}}" type="video/mp4" />
-                            <source src="{{x.video.url}}" type="video/webm" />
-                        </video>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div> 
-        <div class="col-7 px-3"> 
-            <div class="p-t-30 d-flex justify-content-center">
-                <div class="d-flex mb-3">
-                    <h3 class="m-b-0">Emotion detections Real time</h3> 
-                    <a type="button" href="{% url 'warningemotionaudio' %}" class="btn btn-warning mx-3">Warnings!</a>                  
-                </div>        
-            </div>
-        </div>
     </div>        
     <hr/>
 
@@ -93,6 +67,7 @@
     <div class="d-flex justify-content-center mb-5">
         <a class="btn btn-primary" href="{% url 'emotionaudioprosody' %}" type="submit">Usage of Prosody of your voice</a>
         <a class="btn btn-outline" href="{% url 'overallfeedback' %}" type="submit">View summary details</a>
+        <a type="button" href="{% url 'warningemotionaudio' %}" class="btn btn-warning mx-3">Warnings!</a>                  
     </div>    
 
 </div>
