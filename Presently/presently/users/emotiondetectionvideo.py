@@ -9,8 +9,8 @@ import cv2
 from tensorflow.keras.models import load_model
                 
 ################################ Variables & Paramaters #####################################
-CASC_PATH = "models/harr_feature.xml"
-MODEL_PATH = "models/emotion_detection_video.h5"
+CASC_PATH = "users/models/harr_feature.xml"
+MODEL_PATH = "users/models/emotion_detection_video.h5"
   
 ############################# Load Emotion Detection VIDEO ##################################
 

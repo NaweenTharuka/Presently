@@ -11,8 +11,8 @@ import pyaudio
 from pydub import AudioSegment
 
 ################################ Variables & Paramaters #####################################
-saved_model_path = "models/emotion_detection_audio.json"
-saved_weights_path = "models/emotion_detection_audio.h5"
+saved_model_path = "users/models/emotion_detection_audio.json"
+saved_weights_path = "users/models/emotion_detection_audio.h5"
 
 emotions = {
             0 : 'neutral',

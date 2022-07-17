@@ -11,7 +11,7 @@ import pickle
 mp_drawing = mp.solutions.drawing_utils # Drawing helpers
 mp_holistic = mp.solutions.holistic # Mediapipe Solutions
 
-POSE_MODEL_PATH = "models/body_language.pkl"
+POSE_MODEL_PATH = "users/models/body_language.pkl"
 
 ################################ POSE ESTIMATION MODEL & VIDEO ################################
 
@@ -28,7 +28,7 @@ def req_objects(VIDEO_FILE):
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 
     POSE_VIDEO_FILE = os.path.split(VIDEO_FILE)[1]
-    POSE_VIDEO_PATH = 'pose_detected/{}'.format(POSE_VIDEO_FILE)
+    POSE_VIDEO_PATH = 'users/pose_detected/{}'.format(POSE_VIDEO_FILE)
     video_pose = cv2.VideoWriter(POSE_VIDEO_PATH, fourcc, fps, (width, height))
 
     return model, cap, video_pose

@@ -5,11 +5,11 @@ warnings.filterwarnings("ignore")
 import moviepy.editor as mp
 import speech_recognition as sr
 
-import myprosody
-from english_checker import EnglishChecker
-from emotiondetectionvideo import detect_emotions_video
-from emotiondetectionaudio import detect_emotions_audio
-from correct_body_language_decoder import body_language_decoder
+import users.myprosody as myprosody
+from users.english_checker import EnglishChecker
+from users.emotiondetectionvideo import detect_emotions_video
+from users.emotiondetectionaudio import detect_emotions_audio
+from users.correct_body_language_decoder import body_language_decoder
 
 def audio_write(clip, audio, r, a_path):
     clip.audio.write_audiofile(a_path)
@@ -19,14 +19,14 @@ def audio_write(clip, audio, r, a_path):
         audio_file = r.record(source)  
     _ = r.recognize_google(audio_file)
 
-def V2A(video_path, prosody_path = "myprosody/dataset/essen/audios"):
+def V2A(video_path, prosody_path = "users/myprosody/dataset/essen/audios"):
     try:
         clip = mp.VideoFileClip(video_path)
         audio = sr.AudioFile(video_path)
         r = sr.Recognizer()
 
         audio_file = os.path.split(video_path)[1].split('.')[0] + '.wav'
-        audio_path = 'audios/{}'.format(audio_file)
+        audio_path = 'users/audios/{}'.format(audio_file)
         audio_path_prosody = '{}/{}'.format(prosody_path, audio_file)
 
         audio_write(clip, audio, r, audio_path)
@@ -38,7 +38,7 @@ def V2A(video_path, prosody_path = "myprosody/dataset/essen/audios"):
     print('Audio File Generated at: {}'.format(audio_path_prosody))
     return audio_path
 
-def prosody_execution(audio_path, c="myprosody"):
+def prosody_execution(audio_path, c="users/myprosody"):
     p = os.path.split(audio_path)[1].split('.')[0]
 
     try:
@@ -99,7 +99,7 @@ def run(video_path):
 
     return transcription, emotion_logits_video, emotion_logits_audio, prosody_context, grammer_corrected
 
-transcription, emotion_logits_video, emotion_logits_audio, prosody_context, grammer_corrected = run('videos/new.mp4')
+transcription, emotion_logits_video, emotion_logits_audio, prosody_context, grammer_corrected = run('users/videos/new.mp4')
 # print(transcription)
 # print(emotion_logits_video)
 # print(emotion_logits_audio)

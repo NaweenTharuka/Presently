@@ -18,10 +18,10 @@ def run_praat_file(m, p):
     returns : objects outputed by the praat script
     """
     # sound=p+r"\\"+r"dataset"+r"\\"+r"audios"+r"\\"+m+r".wav"
-    sound = os.path.join("audios", m + ".wav")
+    sound = os.path.join("users/audios", m + ".wav")
     sourcerun=p+r"\\"+r"dataset"+r"\\"+r"essen"+r"\\"+r"myspsolution.praat"
     # path=p+r"\\"+r"dataset"+"\\"+r"audios"+r"\\"
-    path = "audios/"
+    path = "users/audios/"
     assert os.path.isfile(sound), "Wrong path to audio file"
     assert os.path.isfile(sourcerun), "Wrong path to praat script"
     assert os.path.isdir(path), "Wrong path to audio files"
@@ -168,10 +168,10 @@ def mysppron(m,p):
     """
 
     # sound=p+"/"+"dataset"+"/"+"audios"+"/"+m+".wav"
-    sound = os.path.join("audios", m + ".wav")
+    sound = os.path.join("users/audios", m + ".wav")
     sourcerun=p+"/"+"dataset"+"/"+"essen"+"/"+"myspsolution.praat"
     # path=p+"/"+"dataset"+"/"+"audios"+"/"
-    path = "audios/"
+    path = "users/audios/"
     try:
         objects= run_file(sourcerun, -20, 2, 0.3, "yes",sound,path, 80, 400, 0.01, capture_output=True)
         print (objects[0]) # This will print the info from the sound object, and objects[0] is a parselmouth.Sound object
@@ -192,10 +192,10 @@ def myspgend(m,p):
     Gender recognition and mood of speech
     """
     # sound=p+"/"+"dataset"+"/"+"audios"+"/"+m+".wav"
-    sound = os.path.join("audios", m + ".wav")
+    sound = os.path.join("users/audios", m + ".wav")
     sourcerun=p+"/"+"dataset"+"/"+"essen"+"/"+"myspsolution.praat" 
     # path=p+"/"+"dataset"+"/"+"audios"+"/"
-    path = "audios/"
+    path = "users/audios/"
     try:
         objects= run_file(sourcerun, -20, 2, 0.3, "yes",sound,path, 80, 400, 0.01, capture_output=True)
         print (objects[0]) # This will print the info from the sound object, and objects[0] is a parselmouth.Sound object
@@ -265,11 +265,11 @@ def myprosody(m,p):
     Compared to native speech, here are the prosodic features of your speech
     """
     # sound=p+"/"+"dataset"+"/"+"audios"+"/"+m+".wav"
-    sound = os.path.join("audios", m + ".wav")
+    sound = os.path.join("users/audios", m + ".wav")
     sourcerun=p+"/"+"dataset"+"/"+"essen"+"/"+"MLTRNL.praat"
     # path=p+"/"+"dataset"+"/"+"audios"+"/"
     # path=p+"/"+"audios"+"/"
-    path = "audios/"
+    path = "users/audios/"
     outo=p+"/"+"dataset"+"/"+"datanewchi22.csv"
     outst=p+"/"+"dataset"+"/"+"datanewchi44.csv"
     outsy=p+"/"+"dataset"+"/"+"datanewchi33.csv"
