@@ -17,16 +17,14 @@
     <div class="text-center py-4">
         <h2>The Most used Emotion for this session: <span style="color:rgb(25, 143, 216)">{{ maxemotion }}</span></h2>
     </div>    
-
+   
     <div class="row pb-5">
-        <!-- {% for key, value in predictions.items %}
-        
+        {% for key, value in emotionvideosum.items %}
             <div class="col-lg-3 text-center"> <span class="pie-chart" data-percent="{{ value }}"> <span
                 class="percent"></span> </span>
-                <h4></h4>
-                <p></p>
+                <h4>{{ key }}</h4>
             </div>
-        {% endfor %} -->
+        {% endfor %}
     </div>
     <hr/>
         

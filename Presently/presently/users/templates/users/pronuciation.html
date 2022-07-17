@@ -28,10 +28,10 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel"
                 aria-labelledby="home-tab">
-                <h2 class="pb-5">You have said..</h2>
+                <!-- <h2 class="pb-5">You have said..</h2>
                 <div class="pb-5 mx-5">
                     <h4 style="color: grey;"></h4>
-                </div>
+                </div> -->
 
                 <div class="py-5">
                     <h2>What <span><img src="{% static 'users/images/title.png' %}" class="img-fluid" style="width: 230px;"></span> Suggest to say...</h2>  
@@ -41,17 +41,20 @@
                     <div id="particles-dots" class="particles"></div>
                     <div class="container">
                         <div class="heading-text text-light px-5">
-                            <h4>{{ grammer_corrected }}</h4>
+                            <h4>{{ grammersuggest }}</h4>
                         </div>
                     </div>
                 </section>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="py-5">
+                    <h2><span><img src="{% static 'users/images/title.png' %}" class="img-fluid" style="width: 230px;"></span> identified these as a Pronunciation errors...</h2>  
+                </div>
                 <section class="background-colored">
                     <div id="particles-dots" class="particles"></div>
                     <div class="container">
                         <div class="heading-text text-light px-5">
-                            <h4>{{ transcription }}</h4>
+                            <h4>{{ pronuciation }}</h4>
                         </div>
                     </div>
                 </section>
