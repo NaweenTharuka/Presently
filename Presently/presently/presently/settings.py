@@ -140,3 +140,5 @@ LOGIN_URL = 'login'
 MEDIA_URL = '/users/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR,"users/")
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
