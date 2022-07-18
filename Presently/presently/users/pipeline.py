@@ -11,31 +11,30 @@ from users.emotiondetectionvideo import detect_emotions_video
 from users.emotiondetectionaudio import detect_emotions_audio
 from users.correct_body_language_decoder import body_language_decoder
 
-def audio_write(clip, audio, r, a_path):
-    clip.audio.write_audiofile(a_path)
+def audio_execution(video_path, audio_path):
+    clip = mp.VideoFileClip(video_path)
+    clip.audio.write_audiofile(audio_path)
+    r = sr.Recognizer()
+    audio =sr.AudioFile(audio_path)
     with audio as source:
         r.pause_threshold = 1
         r.adjust_for_ambient_noise(source, duration=1)
         audio_file = r.record(source)  
-    _ = r.recognize_google(audio_file)
+    r.recognize_google(audio_file)
 
 def V2A(video_path, prosody_path = "users/myprosody/dataset/essen/audios"):
-    try:
-        clip = mp.VideoFileClip(video_path)
-        audio = sr.AudioFile(video_path)
-        r = sr.Recognizer()
+    audio_file = os.path.split(video_path)[1].split('.')[0] + '.wav'
+    audio_path = 'users/audios/{}'.format(audio_file)
+    audio_path_prosody = '{}/{}'.format(prosody_path, audio_file)
 
-        audio_file = os.path.split(video_path)[1].split('.')[0] + '.wav'
-        audio_path = 'users/audios/{}'.format(audio_file)
-        audio_path_prosody = '{}/{}'.format(prosody_path, audio_file)
+    audio_execution(video_path, audio_path)
+    audio_execution(video_path, audio_path_prosody)
 
-        audio_write(clip, audio, r, audio_path)
-        audio_write(clip, audio, r, audio_path_prosody)
-
-    except:
-        pass
     print('Audio File Generated at: {}'.format(audio_path))
     print('Audio File Generated at: {}'.format(audio_path_prosody))
+
+    assert os.path.exists(audio_path), "Audio File not found in General path"
+    assert os.path.exists(audio_path_prosody), "Audio File not found in Prosody path"
     return audio_path
 
 def prosody_execution(audio_path, c="users/myprosody"):
@@ -87,21 +86,13 @@ def run(video_path):
     audio_path = V2A(video_path) 
     english_checker = EnglishChecker()
     transcription, grammer_corrected = english_checker.checker(audio_path)
-    print("Component 1 Done !!!")
 
     _, emotion_logits_video = detect_emotions_video(video_path, 50)
     body_language_decoder(video_path)
-    print("Component 2 Done !!!")
 
     _, emotion_logits_audio = detect_emotions_audio(audio_path)
     prosody_context = prosody_execution(audio_path)
-    print("Component 3 Done !!!")
 
     return transcription, emotion_logits_video, emotion_logits_audio, prosody_context, grammer_corrected
 
-transcription, emotion_logits_video, emotion_logits_audio, prosody_context, grammer_corrected = run('users/videos/new.mp4')
-# print(transcription)
-# print(emotion_logits_video)
-# print(emotion_logits_audio)
-# print(prosody_context)
-# print(grammer_corrected)
+transcription, emotion_logits_video, emotion_logits_audio, prosody_context, grammer_corrected = run('users/videos/v1.mp4')

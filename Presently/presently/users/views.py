@@ -1,5 +1,6 @@
 from array import array
 from http.client import HTTPResponse
+import os
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import UserRegisterForm
@@ -32,8 +33,10 @@ def aboutus(request):
 
 def pronuciation(request):
     pronuciation = pipeline.transcription
+    print(pipeline.transcription)
     grammersuggest = pipeline.grammer_corrected
     context= {
+        'pronuciation': pronuciation,
         'grammersuggest': grammersuggest
     }
     return render(request, 'users/pronuciation.html',context)  
@@ -56,12 +59,11 @@ def feedback(request):
     return render(request, 'users/feedback.html',{"all":all_video}) 
 
 def emotionaudio(request):
-    all_video=Video.objects.all()
     emotionaudiosum = pipeline.emotion_logits_audio
     context= {
         'emotionaudiosum': emotionaudiosum
     }
-    return render(request, 'users/emotionaudio.html',{"all":all_video},context) 
+    return render(request, 'users/emotionaudio.html',context) 
 
 def handgestures(request):
     all_video=Video.objects.all()
@@ -98,6 +100,11 @@ def register(request):
 
     return render(request, 'users/register.html', {'form': form})
 
+def test(request):
+    path="users/pose_detected/"  
+    video_list =os.walk(path)   
+    return render(request,'users/handgestures.html', {'videos': video_list}) 
+ 
 
 @login_required()
 def profile(request):

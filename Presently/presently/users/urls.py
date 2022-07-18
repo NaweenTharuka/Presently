@@ -17,7 +17,7 @@ urlpatterns = [
     path('feedback/emotion/audio', views.emotionaudio, name='emotionaudio'),
     path('feedback/emotion/audio/warnings', views.warningemotionsaudio, name='warningemotionaudio'),
     path('feedback/emotion/video', views.emotionvideo, name='emotionvideo'),
-    path('feedback/emotion/video/hand-gestures', views.handgestures, name='handgestures'),
+    path('feedback/emotion/video/hand-gestures', views.test, name='handgestures'),
     path('feedback/emotion/audio/prosody', views.emotionaudioprosody, name='emotionaudioprosody'),
     path('login/', auth_view.LoginView.as_view(template_name='users/login.html'), name="login"),
     path('logout/', auth_view.LogoutView.as_view(template_name='users/logout.html'), name="logout"),
